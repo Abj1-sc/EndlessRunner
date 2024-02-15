@@ -6,15 +6,12 @@ class Rainbow extends Phaser.Physics.Arcade.Sprite {
 
         this.setFrame(frame);
 
+        this.speed = 6
+
     }
 
     update() {
-        // Add update logic
         // Move the Rainbow object to the left
-        this.x -= 10
-    }
-
-    reset() {
-        // Add reset logic if needed
+        this.x -= this.speed
     }
 }

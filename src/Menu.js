@@ -33,19 +33,29 @@ class Menu extends Phaser.Scene {
         })
         
         //audio
-        // this.load.audio('sfx-select', './assets/sfx-select.wav')
-        // this.load.audio('sfx-explosion', './assets/sfx-explosion.wav')
-        // this.load.audio('sfx-shot', './assets/sfx-shot.wav')
+        this.load.audio('whoosh', './assets/Whoosh.m4a')
+        this.load.audio('sparkle', './assets/sparkle.wav')
+        this.load.audio('power', './assets/power.mp3')
+        this.load.audio('background', './assets/background.mp3')
+        this.load.audio('warning', './assets/pdown.wav')
     }
 
     create() {
         this.starfield = this.add.tileSprite(0, 0, 1200, 960, 'starfield').setOrigin(0, 0)
 
+
+        this.anims.create({
+            key: 'reg',
+            frames: this.anims.generateFrameNumbers('rocket', {start: 0, end: 3, first: 0}),
+            frameRate: 5,
+            repeat: false
+        })
+
         this.anims.create({
             key: 'PowerUp',
-            frames: this.anims.generateFrameNumbers('rocketP', {start: 0, end: 3, first: 0}),
-            frameRate: 15,
-            repeat: true
+            frames: this.anims.generateFrameNumbers('rocketP', {start:0, end: 3, first: 0}),
+            frameRate: 5,
+            repeat: false
         })
 
         let menuConfig = {
@@ -64,7 +74,8 @@ class Menu extends Phaser.Scene {
 
         this.add.image(game.config.width/2, game.config.height/2 - 4 * (borderUISize - borderPadding), 'RGBY').setScale(0.6)
         this.add.text(game.config.width/2, game.config.height/2 + 2 * (borderUISize - borderPadding), "Use Up & Down arrows to change lanes", menuConfig).setOrigin(0.5)
-        this.add.text(game.config.width/2, game.config.height/2 + 4 * (borderUISize - borderPadding), "Up or Down arrow to START", menuConfig).setOrigin(0.5)
+        this.add.text(game.config.width/2, game.config.height/2 + 4 * (borderUISize - borderPadding), "Up or Down arrow to START, Match your color to the Light Beams", menuConfig).setOrigin(0.5)
+        this.add.text(game.config.width/2, game.config.height/2 + 6 * (borderUISize - borderPadding), "Powerup invincibility lasts 5s, get to the color it ends on quick!", menuConfig).setOrigin(0.5)
 
         // define keys
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
@@ -75,8 +86,6 @@ class Menu extends Phaser.Scene {
         this.starfield.tilePositionX += 4
 
         if(Phaser.Input.Keyboard.JustDown(keyUP) || Phaser.Input.Keyboard.JustDown(keyDOWN)) {
-
-            //this.sound.play('sfx-select')
             this.scene.start('playScene')
         }
 
